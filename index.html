@@ -3,12 +3,13 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" href="main.css">
   </head>
   <body>
     <script>
 
       $(document).ready(function(){
-        var $body = $('body');
+        var $body = $('.tweets');
         $body.html('');
 
         var index = streams.home.length - 1;
@@ -23,5 +24,10 @@
       });
 
     </script>
+    <div class="title">
+      <h1>twittler</h1>
+    </div>
+    <div class="tweets">
+    </div>
   </body>
 </html>
