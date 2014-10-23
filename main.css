@@ -14,7 +14,10 @@ h1 {
 body {
 	background-color: cyan;
 }
-.tweets {
+.tweets div {
+	border: solid #555555 3px;
+	margin: 2px;
+	padding: 3px;
 	background-color: white;
 	font-family: sans-serif;
 }
