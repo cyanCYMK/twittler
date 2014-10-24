@@ -7,7 +7,6 @@
   </head>
   <body>
     <script>
-
       $(document).ready(function(){
         var $body = $('.tweets');
         $body.html('');
@@ -16,16 +15,23 @@
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
+          $tweet.html('@' + tweet.user + ' ' + streams.home[index]['created_at'] + '<br />' + tweet.message);
           $tweet.appendTo($body);
           index -= 1;
         }
+
+        // make button for new tweets
+        $('.new-tweets').on('click', 'button', function(){
+          // if timestamps are new add them, home[i]['created_at']
+        });
 
       });
 
     </script>
     <div class="title">
       <h1>twittler</h1>
+    </div>
+    <div class="new-tweets"><button type="button">new tweets</button>
     </div>
     <div class="tweets">
     </div>
