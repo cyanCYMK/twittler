@@ -1,33 +1,64 @@
 /* main.css for twittler */
-html, body, h1, h2, h3, h4, h5, h6, p, div{
+html, body, h1, h2, h3, h4, h5, h6, p, div, ul, ol, li {
 	padding: 0;
 	border: 0;
 	margin: 0;
 	font: inherit;
 	font-size: 100%;
+	list-style-type: none;
 }
-h1 {
-	font-family: 'Roboto Slab', Ubuntu, sans-serif;
-	font-weight: bold;
-	font-size: 7em;
-	color: #202020;
+.title {
+	background: #202020;
+	display: block;
+	/*position: fixed;*/
+	width: 100%;
+}
+.title h1 {
+	font-family: 'Roboto Slab', serif;
+	font-size: 40px;
+	color: #eeeeee;
+	margin-left: 10px;
+}
+.tagline {
+	font-weight: 100;
+	font-size: 15px;
+	padding-left: 30px;
 }
 body {
 	background-color: #33cccc;
 }
-.tweets div {
-	border-bottom: 1px solid #cccccc;
-	margin: 0 auto;
-	padding: 5px;
-	background-color: white;
-	font-family: sans-serif;
-	width: 95%;
-}
 .tweets {
-	border: solid white 1px;
+	font-family: sans-serif;
 	border-radius: 8px;
 	width: 60%;
 	background-color: white;
-	margin: 0 auto;
+	margin: 20px auto;
 	padding-bottom: 20px;
+}
+.tweets p {
+
+}
+.new-tweets {
+	text-align: center;
+	background-color: #bbbbaa;
+	color: #222222;
+	width: 100%;
+}
+.new-tweets:hover {
+	background-color: #66ffff;
+}
+.messages div {
+	border-bottom: 1px solid #cccccc;
+	padding: 5px;
+	background-color: white;
+	width: 95%;
+	margin: 0 auto;
+}
+.userID {
+	font-weight: 400;
+	font-size: 20px;
+}
+.timestamp {
+	font-style: italic;
+	font-size: 8px;
 }

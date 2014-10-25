@@ -9,28 +9,30 @@
   <body>
     <script>
       $(document).ready(function(){
-        var $body = $('.tweets');
+        var $body = $('.messages');
         $body.html('');
-
-        var index = streams.home.length - 1;
+        
+        var tweets = streams.home;
+        var index = tweets.length - 1;
         var lastIndex = index;
-        var lastTimestamp = streams.home[index]['created_at'];
+        var lastTimestamp = tweets[index]['created_at'];
+
         while(index >= 0){
-          var tweet = streams.home[index];
+          var tweet = tweets[index];
           var $tweet = $('<div></div>');
-          $tweet.html('@' + tweet.user + ' ' + tweet.created_at + '<br />' + tweet.message);
+          $tweet.html('@<span class="userID">' + tweet.user + '</span> <span class="timestamp">' + tweet.created_at + '</span><br />' + tweet.message);
           $tweet.appendTo($body);
           index -= 1;
         }
 
         // button to display new tweets
-        $('.new-tweets').on('click', 'button', function(){
+        $('.new-tweets').on('click', function(){
           // look through streams.home array and find first one that has timestamp greater than lastTimestamp
           var tweetsNow = streams.home;
           for (var i=lastIndex, l=tweetsNow.length; i<l; i++) {
             if (lastTimestamp < tweetsNow[i]['created_at']) {
               var $tweetNew = $('<div></div>');
-              $tweetNew.html('@' + tweetsNow[i].user + ' ' + tweetsNow[i].created_at + '<br />' + tweetsNow[i].message);
+              $tweetNew.html('@<span class="userID">' + tweetsNow[i].user + '</span> <span class="timestamp">' + tweetsNow[i].created_at + '</span><br />' + tweetsNow[i].message);
               $tweetNew.prependTo($body);
             }
           }
@@ -40,11 +42,13 @@
 
     </script>
     <div class="title">
-      <h1>twittler</h1>
-    </div>
-    <div class="new-tweets"><button type="button">new tweets</button>
+      <h1>twittler<span class="tagline">a Hack Reactor project</span></h1>
     </div>
     <div class="tweets">
+      <p>Tweets</p>
+      <p class="new-tweets">Show new Tweets</p>
+      <div class="messages">
+      </div>
     </div>
   </body>
 </html>
