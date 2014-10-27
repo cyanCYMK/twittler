@@ -36,8 +36,10 @@ body {
 	padding-bottom: 20px;
 }
 .tweets p {
-
-}
+	padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+ }
 .new-tweets {
 	text-align: center;
 	background-color: #bbbbaa;
@@ -46,6 +48,7 @@ body {
 }
 .new-tweets:hover {
 	background-color: #66ffff;
+	cursor: pointer;
 }
 .messages div {
 	border-bottom: 1px solid #cccccc;
@@ -57,6 +60,10 @@ body {
 .userID {
 	font-weight: 400;
 	font-size: 20px;
+}
+.userID:hover {
+	color: #aa0033;
+	cursor: pointer;
 }
 .timestamp {
 	font-style: italic;

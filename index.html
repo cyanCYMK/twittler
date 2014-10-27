@@ -37,7 +37,21 @@
             }
           }
         });
+        
+        // shows user's tweets
+        var usersTweets = function(userID) {
+          var usersBox = $('<div id="lightbox"><p>Click to close</p><div class="users-content"></div></div>');
+          var usersTweets = streams.users[userID];
+          usersTweets.forEach(function(obj, index){
+            $(usersBox).find(".users-content").html('<div class="users-tweet">'+ obj.message + '<br />' + obj.created_at+'</div>');
+          });
+        };
 
+        // event handler for clicking user's name
+        $('.messages').on('click','.userID', function(){
+          var userID = $(this).text();
+          return usersTweets(userID);
+        });
       });
 
     </script>
@@ -46,7 +60,7 @@
     </div>
     <div class="tweets">
       <p>Tweets</p>
-      <p class="new-tweets">Show new Tweets</p>
+      <div class="new-tweets">Show new Tweets</div>
       <div class="messages">
       </div>
     </div>
