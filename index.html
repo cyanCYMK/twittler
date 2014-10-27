@@ -41,14 +41,14 @@
         
         // function to show user's tweets
         var usersTweets = function(userID) {
-          var $usersBox = $('<div class="lightbox"><p>Click to close</p><div class="users-content"></div></div>');
+          var $usersBox = $('<div class="lightbox"><p>Click to close</p><div class="users-content"><div class="username">'+userID+'</div><div class="users-tweets"></div></div></div>');
           var usersTweets = streams.users[userID];
           usersTweets.forEach(function(obj, index){
             var $usersTweet = $('<div></div>')
             $usersTweet.html('<div class="users-tweet">'+ obj.message + '<br />' + obj.created_at+'</div>');
-            $usersTweet.prependTo($usersBox.find('.users-content'));
+            $usersTweet.prependTo($usersBox.find('.users-tweets'));
           });
-          $body.append($usersBox);
+          $('.user-specific').append($usersBox);
           // hides user's lightbox on click
           $('.lightbox').on('click', function(event){
             event.preventDefault();
@@ -61,7 +61,7 @@
           var userID = $(this).text();
           return usersTweets(userID);
         });
-        
+
       });
 
     </script>
@@ -73,6 +73,8 @@
       <div class="new-tweets">Show new Tweets</div>
       <div class="messages">
       </div>
+    </div>
+    <div class="user-specific">
     </div>
   </body>
 </html>

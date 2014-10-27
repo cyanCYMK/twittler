@@ -70,16 +70,26 @@ body {
 	font-size: 8px;
 }
 .lightbox {
-	position: fixed;
-    top: 10%;
-    left: 10%;
-	width: 75%;
 	background-color: rgba(0,0,0,0.7);
-	text-align: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 	z-index: 1;
+	font-family: sans-serif;
 }
 .lightbox p {
 	text-align: right;
 	color: #dddddd;
 	font-size: 12px;
+}
+.username {
+	font-weight: bold;
+	font-size: 20px;
+}
+.users-content {
+	background-color: #dddddd;
+	width: 70%;
+	margin: 0 auto;
 }
