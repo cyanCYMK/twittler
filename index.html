@@ -16,7 +16,8 @@
         var index = tweets.length - 1;
         var lastIndex = index;
         var lastTimestamp = tweets[index]['created_at'];
-
+        
+        // initial tweets to populate
         while(index >= 0){
           var tweet = tweets[index];
           var $tweet = $('<div></div>');
@@ -38,12 +39,20 @@
           }
         });
         
-        // shows user's tweets
+        // function to show user's tweets
         var usersTweets = function(userID) {
-          var usersBox = $('<div id="lightbox"><p>Click to close</p><div class="users-content"></div></div>');
+          var $usersBox = $('<div class="lightbox"><p>Click to close</p><div class="users-content"></div></div>');
           var usersTweets = streams.users[userID];
           usersTweets.forEach(function(obj, index){
-            $(usersBox).find(".users-content").html('<div class="users-tweet">'+ obj.message + '<br />' + obj.created_at+'</div>');
+            var $usersTweet = $('<div></div>')
+            $usersTweet.html('<div class="users-tweet">'+ obj.message + '<br />' + obj.created_at+'</div>');
+            $usersTweet.prependTo($usersBox.find('.users-content'));
+          });
+          $body.append($usersBox);
+          // hides user's lightbox on click
+          $('.lightbox').on('click', function(event){
+            event.preventDefault();
+            $('.lightbox').hide();
           });
         };
 
@@ -52,6 +61,7 @@
           var userID = $(this).text();
           return usersTweets(userID);
         });
+        
       });
 
     </script>
