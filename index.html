@@ -45,14 +45,13 @@
           var usersTweets = streams.users[userID];
           usersTweets.forEach(function(obj, index){
             var $usersTweet = $('<div></div>')
-            $usersTweet.html('<div class="users-tweet">'+ obj.message + '<br />' + obj.created_at+'</div>');
+            $usersTweet.html('<div class="users-tweet"><span class="timestamp">'+ obj.created_at + '</span><br />' + obj.message+'</div>');
             $usersTweet.prependTo($usersBox.find('.users-tweets'));
           });
           $('.user-specific').append($usersBox);
-          // hides user's lightbox on click
-          $('.lightbox').on('click', function(event){
-            event.preventDefault();
-            $('.lightbox').hide();
+          // remove user's lightbox on click
+          $('.lightbox').on('click', function(){
+            $('.lightbox').remove();
           });
         };
 
