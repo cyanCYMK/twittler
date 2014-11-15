@@ -9,6 +9,38 @@
   <body>
     <script>
       $(document).ready(function(){
+        // displays tweets that are an array of objects
+        function displayTweets(tweets){       
+          tweets.forEach(function(tweet, index, tweets){
+            var $tweet = $('<div></div>');
+            $tweet.html('<span class="userID">' + tweet.user + '</span>'
+              + '<span class="timestamp">' + tweet.created_at + '</span>'
+              + '<br /><span class="message">' + tweet.message + '</span>');
+            $tweet.prependTo('.messages');
+          });
+        }
+        // retrieves and displays new tweets
+        function getNewTweets(fromIndex){
+          var allTweets = streams.home.slice();
+          var lastIndex = allTweets.length - 1;
+          var newTweets = allTweets.slice(fromIndex+1);
+          if (lastIndex > fromIndex){
+            displayTweets(newTweets);
+          }
+          return lastIndex;
+        }
+
+        // initially display tweets upon load
+        var tweets = streams.home.slice();
+        var lastIndex = tweets.length - 1;
+        displayTweets(tweets);
+        
+        // get new tweets on click
+        $('.new-tweets').on('click', function(){
+          lastIndex = getNewTweets(lastIndex);
+        });
+
+        /*
         var $body = $('.messages');
         $body.html('');
         
@@ -38,7 +70,7 @@
             }
           }
         });
-        
+        */
         // function to show user's tweets
         var usersTweets = function(userID) {
           var $usersBox = $('<div class="lightbox"><p>Click to close</p><div class="users-content"><div class="username">'+userID+'</div><div class="users-tweets"></div></div></div>');
@@ -54,13 +86,11 @@
             $('.lightbox').remove();
           });
         };
-
         // event handler for clicking user's name
         $('.messages').on('click','.userID', function(){
           var userID = $(this).text();
           return usersTweets(userID);
         });
-
       });
 
     </script>
