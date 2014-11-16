@@ -3,74 +3,75 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:700' rel='stylesheet' type='text/css'>
+    <link href="http://fonts.googleapis.com/css?family=Roboto+Slab:700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="main.css">
+    <!-- jQuery UI & jQuery for portBox -->
+    <script src="portBox-full-v1.0.1/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="portBox-full-v1.0.1/js/jquery.slimscroll.min.js"></script>
+    <script src="portBox-full-v1.0.1/js/portBox.min.js"></script>
+    <!-- portBox script -->
+    <script src="portBox-full-v1.0.1/js/portBox.slimscroll.min.js"></script>
+    <!-- portBox CSS -->
+    <link href="portBox-full-v1.0.1/css/portBox.css" rel="stylesheet"
   </head>
   <body>
     <script>
       $(document).ready(function(){
+
         // displays tweets that are an array of objects
-        function displayTweets(tweets){       
+        function displayTweets(tweets, element, userID){       
           tweets.forEach(function(tweet, index, tweets){
             var $tweet = $('<div></div>');
-            $tweet.html('<span class="userID">' + tweet.user + '</span>'
-              + '<span class="timestamp">' + tweet.created_at + '</span>'
-              + '<br /><span class="message">' + tweet.message + '</span>');
-            $tweet.prependTo('.messages');
+            if (typeof userID === 'undefined'){
+              $tweet.html('<span class="userID" data-display="user-specific">' + tweet.user + '</span>'
+                + '<span class="timestamp">' + tweet.created_at + '</span>'
+                + '<br /><span class="message">' + tweet.message + '</span>');            
+            } else {
+              $tweet.html('<span class="timestamp">' + tweet.created_at + '</span>'
+                + '<br /><span class="message">' + tweet.message + '</span>');
+            }
+            $tweet.prependTo(element);
           });
         }
+
         // retrieves and displays new tweets
         function getNewTweets(fromIndex){
           var allTweets = streams.home.slice();
           var lastIndex = allTweets.length - 1;
           var newTweets = allTweets.slice(fromIndex+1);
           if (lastIndex > fromIndex){
-            displayTweets(newTweets);
+            displayTweets(newTweets, '.messages');
           }
           return lastIndex;
         }
 
+        // retrieves and displays user specific tweets
+        function usersTweets(userID) {
+          var $usersBox = $('<div class="users-name">' + userID + '</div>'
+            + '<div class="users-tweets"></div>');
+          var usersTweets = streams.users[userID];
+          displayTweets(usersTweets, '#user-specific', userID);
+        }
+
+
         // initially display tweets upon load
         var tweets = streams.home.slice();
         var lastIndex = tweets.length - 1;
-        displayTweets(tweets);
+        displayTweets(tweets, '.messages');
         
         // get new tweets on click
         $('.new-tweets').on('click', function(){
           lastIndex = getNewTweets(lastIndex);
         });
 
-        /*
-        var $body = $('.messages');
-        $body.html('');
-        
-        var tweets = streams.home;
-        var index = tweets.length - 1;
-        var lastIndex = index;
-        var lastTimestamp = tweets[index]['created_at'];
-        
-        // initial tweets to populate
-        while(index >= 0){
-          var tweet = tweets[index];
-          var $tweet = $('<div></div>');
-          $tweet.html('@<span class="userID">' + tweet.user + '</span> <span class="timestamp">' + tweet.created_at + '</span><br />' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
-        }
-
-        // button to display new tweets
-        $('.new-tweets').on('click', function(){
-          // look through streams.home array and find first one that has timestamp greater than lastTimestamp
-          var tweetsNow = streams.home;
-          for (var i=lastIndex, l=tweetsNow.length; i<l; i++) {
-            if (lastTimestamp < tweetsNow[i]['created_at']) {
-              var $tweetNew = $('<div></div>');
-              $tweetNew.html('@<span class="userID">' + tweetsNow[i].user + '</span> <span class="timestamp">' + tweetsNow[i].created_at + '</span><br />' + tweetsNow[i].message);
-              $tweetNew.prependTo($body);
-            }
-          }
-        });
-        */
+        // get tweets of specific user
+        // on click, displayTweets(tweets, '#user-specific', userID)
+        // data-display="user-specific"
+        $('.messages').on('click', '.userID', function(){
+          var userID = $(this).text();
+          usersTweets(userID);
+        })
+/*
         // function to show user's tweets
         var usersTweets = function(userID) {
           var $usersBox = $('<div class="lightbox"><p>Click to close</p><div class="users-content"><div class="username">'+userID+'</div><div class="users-tweets"></div></div></div>');
@@ -91,19 +92,28 @@
           var userID = $(this).text();
           return usersTweets(userID);
         });
+*/
       });
 
     </script>
     <div class="title">
       <h1>twittler<span class="tagline">a Hack Reactor project</span></h1>
     </div>
+  <!--
+    <div>
+      <a href="#" data-display="test">test</a>
+    </div>
+    <div id="test" class="portBox">
+      testing modal box message
+    </div>
+  -->
     <div class="tweets">
       <p>Tweets</p>
       <div class="new-tweets">Show new Tweets</div>
       <div class="messages">
       </div>
     </div>
-    <div class="user-specific">
+    <div id="user-specific" class="portBox">
     </div>
   </body>
 </html>
