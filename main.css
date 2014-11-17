@@ -60,25 +60,50 @@ body {
 	width: 95%;
 	margin: 0 auto;
 }
+.messages div:last-child {
+	border: 0px;
+}
 .userID {
 	font-weight: 400;
 	font-size: 20px;
 }
 .userID:hover {
-	color: #aa0033;
+	color: #33BBFB;
 	cursor: pointer;
 }
-.timestamp {
-	font-style: italic;
-	font-size: 8px;
+.userID:active {
+	color: #1199DD;
+	cursor: pointer;
 }
-.username {
+.messages .timestamp {
+	font-style: italic;
+	font-size: 10px;
+	float: right;
+	padding-top: 8px;
+}
+.user-specific .users-name {
 	font-weight: bold;
 	font-size: 28px;
-	color: #005555;
+	color: #11AADF;
 	margin-bottom: 10px;
 }
-.users-tweet {
-	margin-bottom: 5px;
-	border-top: 1px solid #cccccc;
+.user-specific .timestamp {
+	font-size: 10px;
 }
+.user-specific .users-tweets>div {
+	border-bottom: 1px solid #cccccc;
+}
+.user-specific .users-tweets>div:last-child {
+	border: 0px;
+}
+/*.user-specific .get-users-tweets {
+	text-align: center;
+}
+.user-specific .get-users-tweets button{
+	text-align: center;
+	background-color: #BBBBBB;
+	margin-top: 15px;
+	padding: 4px;
+	border: none;
+	border-radius: 3px;
+}*/

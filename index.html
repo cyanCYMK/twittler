@@ -48,9 +48,15 @@
         function usersTweets(userID) {
           var $usersBox = $('<div class="users-name">' + userID + '</div>'
             + '<div class="users-tweets"></div>');
-          var usersTweets = streams.users[userID];
+            //+ '<div class="get-users-tweets"><button>Show More</button></div>');
+          var usersTweets = streams.users[userID].slice();
+          // show only 5 initially (functionality to display more is broken for now)
+          /*var tweetsFive = usersTweets.splice(usersTweets.length-5);
+          displayTweets(tweetsFive, $usersBox.closest('.users-tweets'), userID);
+          $('<div class="get-users-tweets"><button>Show More</button></div>').appendTo($usersBox.closest('.users-tweets'));*/
           displayTweets(usersTweets, $usersBox.closest('.users-tweets'), userID);
           $usersBox.appendTo('.portBox');
+          return usersTweets;
         }
 
 
@@ -65,17 +71,18 @@
         });
 
         // get tweets of specific user
-        // on click, displayTweets(tweets, '#user-specific', userID)
-        // data-display="user-specific"
         $('.messages').on('click', '.userID', function(){
           var userID = $(this).text();
-          usersTweets(userID);
+          var moreUsersTweets = usersTweets(userID);
+          /*$('.user-specific').on('click', 'button', function(){
+            $moreTweets = $('<div class="more-tweets"><div class="users-tweets"></div></div>')
+            displayTweets(moreUsersTweets, $moreTweets.find('.users-tweets'), userID);
+            $moreTweets.appendTo($(this).closest('.users-tweets'));
+            //$('.get-users-tweets').remove();
+          });*/
         });
         
         // make trigger event on show/hide
-        // however all children that show/hide will also trigger
-        // make it so that scrollbar is always showing
-        // o.alwaysVisible somewhere...
         (function ($) {
           $.each(['show', 'hide'], function (i, ev) {
             var el = $.fn[ev];
@@ -85,48 +92,18 @@
             };
           });
         })(jQuery);
-
+        
+        // clears out user-specific tweets on close of modal window
         $('.user-specific').on('hide', '.portBox', function(){
           $(this).closest('.user-specific').empty();
           $('<div id="portBox-tweets" class="portBox"></div>').appendTo('.user-specific');
         });
-        // when dispaly attr of #user-specific is 'none', clear out nearest user-tweets
-/*
-        // function to show user's tweets
-        var usersTweets = function(userID) {
-          var $usersBox = $('<div class="lightbox"><p>Click to close</p><div class="users-content"><div class="username">'+userID+'</div><div class="users-tweets"></div></div></div>');
-          var usersTweets = streams.users[userID];
-          usersTweets.forEach(function(obj, index){
-            var $usersTweet = $('<div></div>')
-            $usersTweet.html('<div class="users-tweet"><span class="timestamp">'+ obj.created_at + '</span><br />' + obj.message+'</div>');
-            $usersTweet.prependTo($usersBox.find('.users-tweets'));
-          });
-          $('.user-specific').append($usersBox);
-          // remove user's lightbox on click
-          $('.lightbox').on('click', function(){
-            $('.lightbox').remove();
-          });
-        };
-        // event handler for clicking user's name
-        $('.messages').on('click','.userID', function(){
-          var userID = $(this).text();
-          return usersTweets(userID);
-        });
-*/
       });
 
     </script>
     <div class="title">
       <h1>twittler<span class="tagline">a Hack Reactor project</span></h1>
     </div>
-  <!--
-    <div>
-      <a href="#" data-display="test">test</a>
-    </div>
-    <div id="test" class="portBox">
-      testing modal box message
-    </div>
-  -->
     <div class="tweets">
       <p>Tweets</p>
       <div class="new-tweets">Show new Tweets</div>
