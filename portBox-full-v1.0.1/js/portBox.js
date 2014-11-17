@@ -110,7 +110,8 @@ Scroll Bar and Close Button
 				//Run the slimScroll function
 				$(function(){
 					$('.scrollBar').slimScroll({
-						height: '100%'
+						height: '100%',
+						alwaysVisible: true
 					});
 				});	
 				

@@ -5,12 +5,11 @@
     <script src="data_generator.js"></script>
     <link href="http://fonts.googleapis.com/css?family=Roboto+Slab:700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="main.css">
-    <!-- jQuery UI & jQuery for portBox -->
+    <!-- jQuery UI & slimscroll for portBox -->
     <script src="portBox-full-v1.0.1/js/jquery-ui-1.10.3.custom.min.js"></script>
-    <script src="portBox-full-v1.0.1/js/jquery.slimscroll.min.js"></script>
-    <script src="portBox-full-v1.0.1/js/portBox.min.js"></script>
+    <script src="portBox-full-v1.0.1/js/jquery.slimscroll.js"></script>
     <!-- portBox script -->
-    <script src="portBox-full-v1.0.1/js/portBox.slimscroll.min.js"></script>
+    <script src="portBox-full-v1.0.1/js/portBox.js"></script>
     <!-- portBox CSS -->
     <link href="portBox-full-v1.0.1/css/portBox.css" rel="stylesheet"
   </head>
@@ -23,7 +22,7 @@
           tweets.forEach(function(tweet, index, tweets){
             var $tweet = $('<div></div>');
             if (typeof userID === 'undefined'){
-              $tweet.html('<span class="userID" data-display="user-specific">' + tweet.user + '</span>'
+              $tweet.html('<span class="userID" data-display="portBox-tweets">' + tweet.user + '</span>'
                 + '<span class="timestamp">' + tweet.created_at + '</span>'
                 + '<br /><span class="message">' + tweet.message + '</span>');            
             } else {
@@ -50,7 +49,8 @@
           var $usersBox = $('<div class="users-name">' + userID + '</div>'
             + '<div class="users-tweets"></div>');
           var usersTweets = streams.users[userID];
-          displayTweets(usersTweets, '#user-specific', userID);
+          displayTweets(usersTweets, $usersBox.closest('.users-tweets'), userID);
+          $usersBox.appendTo('.portBox');
         }
 
 
@@ -70,7 +70,27 @@
         $('.messages').on('click', '.userID', function(){
           var userID = $(this).text();
           usersTweets(userID);
-        })
+        });
+        
+        // make trigger event on show/hide
+        // however all children that show/hide will also trigger
+        // make it so that scrollbar is always showing
+        // o.alwaysVisible somewhere...
+        (function ($) {
+          $.each(['show', 'hide'], function (i, ev) {
+            var el = $.fn[ev];
+            $.fn[ev] = function () {
+              this.trigger(ev);
+              return el.apply(this, arguments);
+            };
+          });
+        })(jQuery);
+
+        $('.user-specific').on('hide', '.portBox', function(){
+          $(this).closest('.user-specific').empty();
+          $('<div id="portBox-tweets" class="portBox"></div>').appendTo('.user-specific');
+        });
+        // when dispaly attr of #user-specific is 'none', clear out nearest user-tweets
 /*
         // function to show user's tweets
         var usersTweets = function(userID) {
@@ -113,7 +133,9 @@
       <div class="messages">
       </div>
     </div>
-    <div id="user-specific" class="portBox">
+    <div class="user-specific">
+      <div id="portBox-tweets" class="portBox">
+      </div>
     </div>
   </body>
 </html>
