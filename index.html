@@ -11,11 +11,17 @@
     <!-- portBox script -->
     <script src="portBox-full-v1.0.1/js/portBox.js"></script>
     <!-- portBox CSS -->
-    <link href="portBox-full-v1.0.1/css/portBox.css" rel="stylesheet"
+    <link href="portBox-full-v1.0.1/css/portBox.css" rel="stylesheet">
+    <!-- timeago jQuery plugin -->
+    <script src="jquery.timeago.js" type="text/javascript"></script>
   </head>
   <body>
     <script>
       $(document).ready(function(){
+        // attach timeago to timestamps
+        //$("abbr.timeago").timeago();
+        $('time.timeago').timeago();
+        $.timeago.settings.allowFuture = true;
 
         // displays tweets that are an array of objects
         function displayTweets(tweets, element, userID){       
@@ -23,10 +29,14 @@
             var $tweet = $('<div></div>');
             if (typeof userID === 'undefined'){
               $tweet.html('<span class="userID" data-display="portBox-tweets">' + tweet.user + '</span>'
-                + '<span class="timestamp">' + tweet.created_at + '</span>'
+                + '<span class="timestamp"><abbr class="timeago" title=' + tweet.created_at.toISOString() + '>'
+                + tweet.created_at
+                + '</abbr></span>'
                 + '<br /><span class="message">' + tweet.message + '</span>');            
             } else {
-              $tweet.html('<span class="timestamp">' + tweet.created_at + '</span>'
+              $tweet.html('<span class="timestamp"><abbr class="timeago" title=' + tweet.created_at.toISOString() + '>'
+                + tweet.created_at
+                + '</abbr></span>'
                 + '<br /><span class="message">' + tweet.message + '</span>');
             }
             $tweet.prependTo(element);
@@ -64,16 +74,19 @@
         var tweets = streams.home.slice();
         var lastIndex = tweets.length - 1;
         displayTweets(tweets, '.messages');
-        
+        $('abbr.timeago').timeago();
+
         // get new tweets on click
         $('.new-tweets').on('click', function(){
           lastIndex = getNewTweets(lastIndex);
+          $('abbr.timeago').timeago();
         });
 
         // get tweets of specific user
         $('.messages').on('click', '.userID', function(){
           var userID = $(this).text();
           var moreUsersTweets = usersTweets(userID);
+          $('abbr.timeago').timeago();
           /*$('.user-specific').on('click', 'button', function(){
             $moreTweets = $('<div class="more-tweets"><div class="users-tweets"></div></div>')
             displayTweets(moreUsersTweets, $moreTweets.find('.users-tweets'), userID);
