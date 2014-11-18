@@ -18,9 +18,6 @@
   <body>
     <script>
       $(document).ready(function(){
-        // attach timeago to timestamps
-        //$("abbr.timeago").timeago();
-        $('time.timeago').timeago();
         $.timeago.settings.allowFuture = true;
 
         // displays tweets that are an array of objects
@@ -49,7 +46,12 @@
           var lastIndex = allTweets.length - 1;
           var newTweets = allTweets.slice(fromIndex+1);
           if (lastIndex > fromIndex){
-            displayTweets(newTweets, '.messages');
+            (function slideDownTweets(){
+              $newTweets = $('<div class="hidden"></div>');
+              displayTweets(newTweets, $newTweets.closest('.hidden'));
+              $newTweets.prependTo('.messages').hide();
+              $('.hidden').slideDown();
+            })();
           }
           return lastIndex;
         }
@@ -69,12 +71,17 @@
           return usersTweets;
         }
 
+        // Calling functions below here
 
         // initially display tweets upon load
         var tweets = streams.home.slice();
         var lastIndex = tweets.length - 1;
-        displayTweets(tweets, '.messages');
-        $('abbr.timeago').timeago();
+        (function(){
+          $initialTweets = $('<div></div>');
+          displayTweets(tweets, $initialTweets.closest('div'));
+          $initialTweets.prependTo('.messages');
+          $('abbr.timeago').timeago();
+        })();
 
         // get new tweets on click
         $('.new-tweets').on('click', function(){

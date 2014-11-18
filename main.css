@@ -45,22 +45,23 @@ body {
  }
 .new-tweets {
 	text-align: center;
-	background-color: #bbbbaa;
+	background-color: #eaeaea;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-bottom: 2px solid #9fe2e3;
+	border-top: 2px solid #9fe2e3;
 	color: #222222;
 	width: 100%;
 }
 .new-tweets:hover {
-	background-color: #66ffff;
+	background-color: #9fe2e3;
 	cursor: pointer;
 }
-.messages div {
+.messages>div div {
+	padding: 10px 15px 10px 15px;
 	border-bottom: 1px solid #cccccc;
-	padding: 5px;
-	background-color: white;
-	width: 95%;
-	margin: 0 auto;
 }
-.messages div:last-child {
+.messages>div:last-child {
 	border: 0px;
 }
 .userID {
@@ -76,7 +77,6 @@ body {
 	cursor: pointer;
 }
 .messages .timestamp {
-	font-style: italic;
 	font-size: 10px;
 	float: right;
 	padding-top: 8px;
