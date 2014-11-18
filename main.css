@@ -43,6 +43,29 @@ body {
     padding-left: 10px;
     padding-bottom: 5px;
  }
+ form {
+ 	margin: 0 auto;
+ 	text-align: center;
+ 	padding: 1em;
+ 	border-bottom: 1px solid #cccccc;
+ }
+ textarea {
+ 	font: 1em sans-serif;
+ 	color: #909090;
+ 	border: 1px solid #999999;
+ 	vertical-align: top;
+ 	width: 70%;
+ 	height: 1.4em;
+ 	display: inline;
+ }
+ textarea:focus {
+ 	border-color: #000;
+ 	height: 5em;
+ }
+ button {
+ 	margin-left: 10px;
+ 	height: 2em;
+ }
 .new-tweets {
 	text-align: center;
 	background-color: #eaeaea;
