@@ -118,6 +118,20 @@
           $(this).closest('.user-specific').empty();
           $('<div id="portBox-tweets" class="portBox"></div>').appendTo('.user-specific');
         });
+        
+        // visitor test, replace this later
+        visitor = 'christine';
+        streams.users[visitor] = typeof streams.users[visitor] === 'undefined' ? [] : streams.users[visitor];
+
+        $('form').on('submit', function(event){
+          event.preventDefault();
+          var myMessage = $('textarea').val();
+          writeTweet(myMessage);
+          lastIndex = getNewTweets(lastIndex);
+          $('abbr.timeago').timeago();
+        });
+
+
       });
 
     </script>
@@ -125,10 +139,10 @@
       <h1>twittler<span class="tagline">a Hack Reactor project</span></h1>
     </div>
     <div class="tweets">
-      
-      <form action="#">
+
+      <form id="myTweet">
         <div>
-          <textarea id="make-tweet"></textarea><button>Tweet</button>
+          <textarea id="make-tweet"></textarea><input type="submit" value="Tweet it!">
         </div>
       </form>
 
